@@ -3,8 +3,8 @@
 To set up the project locally, follow the commands below:
 
 # Clone the repository
-git clone https://github.com/PrithviPillai/kitchen-spurs.git
-cd kitchen-spurs
+git clone project
+cd project
 
 # Install PHP dependencies
 composer install
@@ -15,12 +15,12 @@ php artisan key:generate
 
 # Configure your .env file with database credentials
 # (Open .env and update the following lines)
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=your_database_name
-# DB_USERNAME=your_database_user
-# DB_PASSWORD=your_database_password
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
 
 # Run database migrations
 php artisan migrate
@@ -32,4 +32,6 @@ php artisan db:seed
 php artisan serve
 
 # The application should now be accessible at:
-# http://localhost:8000
+http://localhost:8000
+
+# The postman collection is in extra_docs/Collection directory.
