@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\ArticleCategory;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\GenerateSlugFromTitle;
 use App\Http\Controllers\Controller;
+use App\Jobs\GenerateSummaryFromContent;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -66,9 +68,9 @@ class ArticlesController extends Controller
         try {
             $rules = [
                 'title' => 'required|string|max:100',
-                'slug' => 'required|string|max:100|unique:articles,slug',
+                // 'slug' => 'required|string|max:100|unique:articles,slug',
                 'content' => 'required|string',
-                'summary' => 'required|string',
+                // 'summary' => 'required|string',
                 'category' => 'required|array',
                 'category.*' => 'integer|exists:categories,id',
                 'status' => 'required|string|in:Draft,Published,Archived',
@@ -79,14 +81,14 @@ class ArticlesController extends Controller
                 'title.required' => 'The title is required.',
                 'title.string' => 'The title must be a string.',
                 'title.max' => 'The title may not be greater than 100 characters.',
-                'slug.required' => 'The slug is required.',
-                'slug.string' => 'The slug must be a string.',
-                'slug.max' => 'The slug may not be greater than 100 characters.',
-                'slug.unique' => 'The slug has already been taken.',
+                // 'slug.required' => 'The slug is required.',
+                // 'slug.string' => 'The slug must be a string.',
+                // 'slug.max' => 'The slug may not be greater than 100 characters.',
+                // 'slug.unique' => 'The slug has already been taken.',
                 'content.required' => 'The content is required.',
                 'content.string' => 'The content must be a string.',
-                'summary.required' => 'The summary is required.',
-                'summary.string' => 'The summary must be a string.',
+                // 'summary.required' => 'The summary is required.',
+                // 'summary.string' => 'The summary must be a string.',
                 'category.required' => 'At least one category is required.',
                 'category.array' => 'The category must be an array.',
                 'category.*.integer' => 'Each category must be a valid ID.',
@@ -115,7 +117,8 @@ class ArticlesController extends Controller
                 'user_id' => $request->author,
             );
 
-            $article_id = Article::create($data)->id;
+            $article = Article::create($data);
+            $article_id = $article->id;
 
             $articleCategories = $request->category;
             $categoryData = [];
@@ -127,6 +130,9 @@ class ArticlesController extends Controller
             }
 
             ArticleCategory::insert($categoryData);
+
+            GenerateSlugFromTitle::dispatch($article);
+            GenerateSummaryFromContent::dispatch($article);
 
             DB::commit();
 
@@ -204,14 +210,14 @@ class ArticlesController extends Controller
 
             $rules = [
                 'title' => 'sometimes|string|max:100',
-                'slug' => [
-                    'sometimes',
-                    'string',
-                    'max:100',
-                     Rule::unique('articles')->ignore($article->id),
-                ],
+                // 'slug' => [
+                //     'sometimes',
+                //     'string',
+                //     'max:100',
+                //      Rule::unique('articles')->ignore($article->id),
+                // ],
                 'content' => 'sometimes|string',
-                'summary' => 'sometimes|string',
+                // 'summary' => 'sometimes|string',
                 'category' => 'sometimes|array',
                 'category.*' => 'integer|exists:categories,id',
                 'status' => 'sometimes|string|in:Draft,Published,Archived',
@@ -221,11 +227,11 @@ class ArticlesController extends Controller
             $messages = [
                 'title.string' => 'The title must be a string.',
                 'title.max' => 'The title may not be greater than 100 characters.',
-                'slug.string' => 'The slug must be a string.',
-                'slug.max' => 'The slug may not be greater than 100 characters.',
-                'slug.unique' => 'The slug has already been taken.',
+                // 'slug.string' => 'The slug must be a string.',
+                // 'slug.max' => 'The slug may not be greater than 100 characters.',
+                // 'slug.unique' => 'The slug has already been taken.',
                 'content.string' => 'The content must be a string.',
-                'summary.string' => 'The summary must be a string.',
+                // 'summary.string' => 'The summary must be a string.',
                 'category.array' => 'The category must be an array.',
                 'category.*.integer' => 'Each category must be a valid ID.',
                 'category.*.exists' => 'One or more selected categories are invalid.',
@@ -258,6 +264,16 @@ class ArticlesController extends Controller
             }
 
             DB::commit();
+
+            if ($request->filled('title') && $request->filled('content')) {
+                GenerateSlugFromTitle::dispatch($article);
+                GenerateSummaryFromContent::dispatch($article);
+            } elseif ($request->filled('title')) {
+                GenerateSlugFromTitle::dispatch($article);
+            } elseif ($request->filled('content')) {
+                GenerateSummaryFromContent::dispatch($article);
+            }
+
 
             return response()->json([
                 'status' => 'success',
