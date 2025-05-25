@@ -35,3 +35,9 @@ php artisan serve
 http://localhost:8000
 
 # The postman collection is in extra_docs/Collection directory.
+
+# For LLM Api key, kindly use google ai studio, the link is as follows:
+
+https://aistudio.google.com/
+
+Using jobs and queue in this project for generating slug and content using api, will have to run php artisan queue:work in the background to run the jobs and queues

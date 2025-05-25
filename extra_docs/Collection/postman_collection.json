@@ -232,7 +232,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|DKAhTFGxB28Q3OyZRdtQ9DKu2ppy9WLSuv8Xukdc0707fb64",
+									"value": "4|GnMYjL5xE47Yw1QVNeUj3U5pnbyRXZH1vgkFRtZS6ccfb6fa",
 									"type": "string"
 								}
 							]
@@ -247,7 +247,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"Lorem Ipsum Dolor Sit Amet\",\r\n  \"slug\": \"lorem-ipsum-dolor-sit-amet\",\r\n  \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.\",\r\n  \"summary\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n  \"category\": [1],\r\n  \"status\": \"Draft\",\r\n  \"author\": 1\r\n}\r\n"
+							"raw": "{\r\n  \"title\": \"some random title given\",\r\n//   \"slug\": \"lorem-ipsum-dolor-sit-amet7\",\r\n  \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.\",\r\n//   \"summary\": \"some random summary\",\r\n  \"category\": [1],\r\n  \"status\": \"Draft\",\r\n  \"author\": 1\r\n}\r\n"
 						},
 						"url": {
 							"raw": "127.0.0.1:8000/api/articles",
@@ -319,7 +319,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|DKAhTFGxB28Q3OyZRdtQ9DKu2ppy9WLSuv8Xukdc0707fb64",
+									"value": "4|GnMYjL5xE47Yw1QVNeUj3U5pnbyRXZH1vgkFRtZS6ccfb6fa",
 									"type": "string"
 								}
 							]
@@ -335,7 +335,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"Lorem Ipsum Dolor Sit Amet updated\",\r\n  \"slug\": \"lorem-ipsum-dolor-sit-amet updated\",\r\n  \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. updated\",\r\n  \"summary\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. updated\",\r\n  \"category\": [2],\r\n  \"status\": \"Published\",\r\n  \"author\": 2\r\n}\r\n"
+							"raw": "{\r\n  \"title\": \"the title is updated in this case\",\r\n//   \"slug\": \"lorem-ipsum-dolor-sit-amet updated\",\r\n  \"content\": \"The content now has the term laravel which is a php framework\",\r\n//   \"summary\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. updated\",\r\n  \"category\": [2],\r\n  \"status\": \"Published\",\r\n  \"author\": 2\r\n}\r\n"
 						},
 						"url": {
 							"raw": "127.0.0.1:8000/api/articles/2",
